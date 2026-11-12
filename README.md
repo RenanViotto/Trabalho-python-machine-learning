@@ -27,6 +27,7 @@ Também é possível selecionar um cliente aleatório da própria base de dados 
 
 ## Estrutura do projeto
 
+```text
 Trabalho-python-machine-learning/
 │
 ├── app.py
@@ -49,6 +50,7 @@ Trabalho-python-machine-learning/
     ├── index.html
     ├── analise.html
     └── previsao.html
+```
 
 ## Como executar
 
@@ -56,16 +58,21 @@ Para executar o projeto, é necessário ter o Python instalado.
 
 Primeiro, abra o terminal na pasta principal do projeto e instale as bibliotecas utilizadas:
 
+```bash
 pip install -r requirements.txt
-
+```
 
 Depois, execute o arquivo principal:
 
+```bash
 python app.py
+```
 
 Com o servidor iniciado, acesse pelo navegador:
 
+```text
 http://127.0.0.1:5000
+```
 
 O projeto já acompanha a base de dados e o modelo treinado, então não é necessário realizar um novo treinamento para utilizar a aplicação.
 
@@ -73,7 +80,9 @@ O projeto já acompanha a base de dados e o modelo treinado, então não é nece
 
 Caso queira treinar os modelos novamente, basta executar:
 
+```bash
 python treinar.py
+```
 
 Nesse processo, são utilizados dois algoritmos:
 
