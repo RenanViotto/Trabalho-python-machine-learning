@@ -2,23 +2,27 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Previsão</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+    <main class="container">
     <h1>Previsão de Inadimplência</h1>
 
     {% if erro %}
-        <p style="color: red;"><strong>Erro:</strong> {{ erro }}</p>
+        <p class="alerta"><strong>Erro:</strong> {{ erro }}</p>
     {% endif %}
 
     {% if resultado is not none %}
         <h2>Resultado: 
             {% if resultado == 1 %}
-                <span style="color: red;">Cliente com risco de inadimplência (1)</span>
+                <span>Cliente com risco de inadimplência (1)</span>
             {% else %}
-                <span style="color: green;">Cliente adimplente (0)</span>
+                <span>Cliente adimplente (0)</span>
             {% endif %}
         </h2>
+        <p class="resultado">Resultado da previsão do modelo.</p>
     {% endif %}
 
     <form method="POST">
@@ -96,5 +100,6 @@
 
     <br>
     <a href="{{ url_for('index') }}">Voltar para o início</a>
+    </main>
 </body>
 </html>
