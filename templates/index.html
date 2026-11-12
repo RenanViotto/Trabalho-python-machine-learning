@@ -2,22 +2,36 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Início</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projeto de Machine Learning</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Projeto de Machine Learning</h1>
-    
-    {% if erro %}
-        <p style="color: red;"><strong>Erro:</strong> {{ erro }}</p>
-    {% endif %}
+    <main class="container">
+        <h1>Projeto de Machine Learning</h1>
+        <p>Bem-vindo ao sistema de análise e previsão de inadimplência.</p>
 
-    {% if resumo %}
-        <p><strong>Linhas:</strong> {{ resumo.linhas }}</p>
-        <p><strong>Colunas:</strong> {{ resumo.colunas }}</p>
-    {% endif %}
+        {% if erro %}
+            <p class="alerta"><strong>Erro:</strong> {{ erro }}</p>
+        {% endif %}
 
-    <hr>
-    <a href="{{ url_for('analise') }}">Ver Análise e Gráficos</a> |
-    <a href="{{ url_for('previsao') }}">Fazer Previsão</a>
+        {% if resumo %}
+            <h2>Resumo dos dados</h2>
+            <p><strong>Linhas:</strong> {{ resumo.linhas }}</p>
+            <p><strong>Colunas:</strong> {{ resumo.colunas }}</p>
+        {% endif %}
+
+        <h2>Enviar arquivo CSV</h2>
+        <form action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+            <label for="csv">Selecione um arquivo:</label>
+            <input type="file" id="csv" name="csv" accept=".csv" required>
+            <button type="submit">Enviar arquivo</button>
+        </form>
+
+        <hr>
+        <h2>O que deseja fazer?</h2>
+        <a href="{{ url_for('analise') }}">Ver análise e gráficos</a>
+        <a href="{{ url_for('previsao') }}">Fazer previsão</a>
+    </main>
 </body>
 </html>
