@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Previsão</title>
+</head>
+<body>
+    <h1>Previsão de Inadimplência</h1>
+
+    {% if erro %}
+        <p style="color: red;"><strong>Erro:</strong> {{ erro }}</p>
+    {% endif %}
+
+    {% if resultado is not none %}
+        <h2>Resultado: 
+            {% if resultado == 1 %}
+                <span style="color: red;">Cliente com risco de inadimplência (1)</span>
+            {% else %}
+                <span style="color: green;">Cliente adimplente (0)</span>
+            {% endif %}
+        </h2>
+    {% endif %}
+
+    <form method="POST">
+        <p>
+            <label>Limite de Crédito (LIMIT_BAL):</label>
+            <!-- Limite mínimo de 10.000 e passo de 1000 para facilitar -->
+            <input type="number" name="LIMIT_BAL" value="{{ cliente.LIMIT_BAL | default('') }}" min="10000" step="1000" required>
+        </p>
+
+        <p>
+            <label>Sexo:</label>
+            <select name="SEX" required>
+                <option value="" disabled {% if not cliente.SEX %}selected{% endif %}>Selecione...</option>
+                <option value="1" {% if cliente.SEX|string == '1' %}selected{% endif %}>1 - Masculino</option>
+                <option value="2" {% if cliente.SEX|string == '2' %}selected{% endif %}>2 - Feminino</option>
+            </select>
+        </p>
+
+        <p>
+            <label>Escolaridade:</label>
+            <select name="EDUCATION" required>
+                <option value="" disabled {% if not cliente.EDUCATION %}selected{% endif %}>Selecione...</option>
+                <option value="1" {% if cliente.EDUCATION|string == '1' %}selected{% endif %}>1 - Pós-graduação</option>
+                <option value="2" {% if cliente.EDUCATION|string == '2' %}selected{% endif %}>2 - Universidade</option>
+                <option value="3" {% if cliente.EDUCATION|string == '3' %}selected{% endif %}>3 - Ensino Médio</option>
+                <option value="4" {% if cliente.EDUCATION|string == '4' %}selected{% endif %}>4 - Outros / Não informado</option>
+            </select>
+        </p>
+
+        <p>
+            <label>Estado Civil:</label>
+            <select name="MARRIAGE" required>
+                <option value="" disabled {% if not cliente.MARRIAGE %}selected{% endif %}>Selecione...</option>
+                <option value="1" {% if cliente.MARRIAGE|string == '1' %}selected{% endif %}>1 - Casado(a)</option>
+                <option value="2" {% if cliente.MARRIAGE|string == '2' %}selected{% endif %}>2 - Solteiro(a)</option>
+                <option value="3" {% if cliente.MARRIAGE|string == '3' %}selected{% endif %}>3 - Outros</option>
+            </select>
+        </p>
+
+        <p>
+            <label>Idade:</label>
+            <!-- Idade limitada entre 18 e 100 anos -->
+            <input type="number" name="AGE" value="{{ cliente.AGE | default('') }}" min="18" max="100" required>
+        </p>
+
+        <!-- Para os campos de pagamento, usamos min="-2" e max="8" pois são os valores reais do dataset -->
+        <p>
+            <label>Histórico de Pagamento PAY_0 (Set/2005):</label>
+            <input type="number" name="PAY_0" value="{{ cliente.PAY_0 | default('') }}" min="-2" max="8" required>
+            <small>(-2 = sem consumo, -1 = pago em dia, 0 = rotativo, 1+ = meses de atraso)</small>
+        </p>
+        <p>
+            <label>PAY_2 (Ago/2005):</label>
+            <input type="number" name="PAY_2" value="{{ cliente.PAY_2 | default('') }}" min="-2" max="8" required>
+        </p>
+        <p>
+            <label>PAY_3 (Jul/2005):</label>
+            <input type="number" name="PAY_3" value="{{ cliente.PAY_3 | default('') }}" min="-2" max="8" required>
+        </p>
+        <p>
+            <label>PAY_4 (Jun/2005):</label>
+            <input type="number" name="PAY_4" value="{{ cliente.PAY_4 | default('') }}" min="-2" max="8" required>
+        </p>
+        <p>
+            <label>PAY_5 (Mai/2005):</label>
+            <input type="number" name="PAY_5" value="{{ cliente.PAY_5 | default('') }}" min="-2" max="8" required>
+        </p>
+        <p>
+            <label>PAY_6 (Abr/2005):</label>
+            <input type="number" name="PAY_6" value="{{ cliente.PAY_6 | default('') }}" min="-2" max="8" required>
+        </p>
+
+        <button type="submit">Prever</button>
+    </form>
+
+    <br>
+    <a href="{{ url_for('index') }}">Voltar para o início</a>
+</body>
+</html>

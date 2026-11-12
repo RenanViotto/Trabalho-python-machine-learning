@@ -1,6 +1,7 @@
 import os
 import joblib
 import pandas as pd
+from dados import carregar_csv, tratamento_de_dados
 
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
@@ -10,7 +11,7 @@ from sklearn.metrics import (
     recall_score, precision_score, f1_score,
 )
 
-CSV = os.path.join("static", "data", "UCI_Credit_Card.csv")
+CSV = os.path.join("data", "UCI_Credit_Card.csv")
 PASTA_MODELOS = "models"
 ALVO = "default.payment.next.month"
 
@@ -18,11 +19,17 @@ ALVO = "default.payment.next.month"
 def main():
     os.makedirs(PASTA_MODELOS, exist_ok=True)
 
-    dados = pd.read_csv(CSV)
-    dados = dados.drop(columns=["ID"])
+    df, erro = carregar_csv(CSV)
+    if erro:
+        print(erro)
+        return
 
-    X = dados.drop(columns=[ALVO])
-    Y = dados[ALVO]
+    df, _ = tratamento_de_dados(df)
+    df = df.drop(columns=["ID"])
+
+    X = df.drop(columns=[ALVO])
+    Y = df[ALVO]
+
 
     X_treino, X_teste, Y_treino, Y_teste = train_test_split(
         X, Y, test_size=0.2, random_state=42, stratify=Y,

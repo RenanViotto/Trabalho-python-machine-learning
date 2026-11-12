@@ -5,7 +5,8 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 ALVO = "default.payment.next.month"
-PASTA_GRAFICOS = os.path.join("static", "graficos")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PASTA_GRAFICOS = os.path.join(BASE_DIR, "static", "grafico")
 
 NOMES_GRAFICOS = [
     "faturas_por_estado_civil.png",

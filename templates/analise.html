@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Análise de Dados</title>
+</head>
+<body>
+    <h1>Análise Exploratória</h1>
+
+    <h2>Achados Principais</h2>
+    <ul>
+        {% for achado in achados %}
+            <li>{{ achado }}</li>
+        {% else %}
+            <li>Nenhum achado registrado.</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Gráficos Gerados</h2>
+    <div>
+        {% for nome in graficos %}
+            <div>
+                <img src="{{ url_for('static', filename='grafico/' + nome) }}" 
+                     alt="Gráfico: {{ nome }}"
+                     width="500">
+            </div>
+            <br>
+        {% else %}
+            <p>Nenhum gráfico foi gerado ainda. Faça o upload de um CSV na página inicial.</p>
+        {% endfor %}
+    </div>
+
+    <h2>Log de Tratamento de Dados</h2>
+    <ul>
+        {% for linha in log %}
+            <li>{{ linha }}</li>
+        {% else %}
+            <li>Nenhuma alteração registrada.</li>
+        {% endfor %}
+    </ul>
+
+    <br>
+    <a href="{{ url_for('index') }}">Voltar para o início</a>
+
+</body>
+</html>

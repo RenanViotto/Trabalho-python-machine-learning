@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Início</title>
+</head>
+<body>
+    <h1>Projeto de Machine Learning</h1>
+    
+    {% if erro %}
+        <p style="color: red;"><strong>Erro:</strong> {{ erro }}</p>
+    {% endif %}
+
+    {% if resumo %}
+        <p><strong>Linhas:</strong> {{ resumo.linhas }}</p>
+        <p><strong>Colunas:</strong> {{ resumo.colunas }}</p>
+    {% endif %}
+
+    <hr>
+    <a href="{{ url_for('analise') }}">Ver Análise e Gráficos</a> |
+    <a href="{{ url_for('previsao') }}">Fazer Previsão</a>
+</body>
+</html>

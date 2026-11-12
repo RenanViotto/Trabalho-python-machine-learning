@@ -34,8 +34,8 @@ def carregar_csv(origem):
 def analise_tabela(df):
     return{
         "linhas": len(df),
-        "colubas": len(df.columns),
-        "ausentes": df.insa().sum().sum(),#SOMA COLUNA / SOMA O RESULTADO DE CADA COLUNA
+        "colunas": len(df.columns),
+        "ausentes": df.isna().sum().sum(),#SOMA COLUNA / SOMA O RESULTADO DE CADA COLUNA
         "duplicado": df.duplicated().sum()
     }
 
@@ -89,8 +89,20 @@ def estatisticas(df):
     print(f"Taxa p/Educacao Inadimplencia: {taxa_educacao_inadimplencia}%")
     print(f"Taxa p/Atraso: {taxa_atraso_inadimplencia}%")
 
+def resumo_achados(df):
+    """Retorna uma lista com insights textuais sobre os dados limpos."""
+    taxa = df[ALVO].mean() * 100
+    total = len(df)
+    inadimplentes = int(df[ALVO].sum())
+    
+    return [
+        f"Total de clientes analisados: {total}",
+        f"Total de inadimplentes: {inadimplentes}",
+        f"Taxa geral de inadimplência: {taxa:.2f}%"
+    ]
+
 if __name__ == "__main__":
-    df, erro = carregar_csv(os.path.join("static", "data", "UCI_Credit_Card.csv"))
+    df, erro = carregar_csv(os.path.join("data", "UCI_Credit_Card.csv"))
     if erro:
         raise SystemExit(erro)
 
